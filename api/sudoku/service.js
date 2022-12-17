@@ -5,29 +5,26 @@ const getSudokuFromImage = async (res) => {
   return res.status(200).send({})
 }
 
-const getRandomSudoku = async (res) => {
+const getRandomSudoku = async (difficulty, res) => {
   const sudoku = new Sudoku()
-  sudoku.getRandomBoard()
-  // sudoku.printBoard()
-  return res.status(200).send({ board: sudoku.getRandomBoard() })
+  sudoku.getRandomBoard(difficulty)
+  return res.status(200).send({ board: sudoku.board })
 }
 const checkSudokuSolution = async (board, res) => {
   const sudoku = new Sudoku(board)
-  // sudoku.printBoard()
   return res.status(200).send({ solved: sudoku.checkIfSolved() })
 }
 const solveSudoku = async (board, res) => {
   const sudoku = new Sudoku(board)
   console.time('board - solution')
-  sudoku.solveBoard()
-  if ( sudoku.solveBoard()) {
+  if (sudoku.solveBoard()) {
     logger.info('board been solved!!!')
+    res.status(200).send({ board: sudoku.board })
   } else {
     logger.warn('Failed to solved board')
+    res.status(500).send({ message: 'Failed to solved board' })
   }
-  sudoku.printBoard()
   console.timeEnd('board - solution')
-  return res.status(200).send({ board: sudoku.board })
 }
 
 module.exports = {

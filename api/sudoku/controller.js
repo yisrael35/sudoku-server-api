@@ -1,3 +1,5 @@
+const { Errors } = require('../../constants/Errors')
+const ServerError = require('../../utils/ServerError')
 const service = require('./service')
 
 const getSudokuFromImage = async (req, res, next) => {
@@ -9,7 +11,12 @@ const getSudokuFromImage = async (req, res, next) => {
 }
 const getRandomSudoku = async (req, res, next) => {
   try {
-    await service.getRandomSudoku(res)
+    const difficulty = req.query.difficulty || 0
+    if (difficulty < 0 || difficulty > 3) {
+      const errorMessage = `difficulty need to be between 0 - 3, not ${difficulty}`
+      throw new ServerError(Errors.SUDOKU({ code: 412, errorMessage }))
+    }
+    await service.getRandomSudoku(Number(difficulty), res)
   } catch (error) {
     next(error)
   }
