@@ -4,6 +4,7 @@ const service = require('./service')
 
 const getSudokuFromImage = async (req, res, next) => {
   try {
+    // console.log(req)
     await service.getSudokuFromImage(res)
   } catch (error) {
     next(error)

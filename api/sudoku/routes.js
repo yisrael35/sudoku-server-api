@@ -3,7 +3,7 @@ const { getSudokuFromImage, getRandomSudoku, checkSudokuSolution, solveSudoku } 
 
 const router = express.Router()
 
-router.get('/image/:filename', getSudokuFromImage)
+router.put('/image/:filename', getSudokuFromImage)
 router.get('/random', getRandomSudoku)
 router.post('/solved', checkSudokuSolution)
 router.post('/solve', solveSudoku)
