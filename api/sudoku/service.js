@@ -1,7 +1,8 @@
 const Sudoku = require('../../models/Sudoku')
 const logger = require('../../utils/Logger')
 
-const getSudokuFromImage = async (res) => {
+const getSudokuFromImage = async (fileName, res) => {
+  console.log({ fileName })
   const sudoku = new Sudoku()
   sudoku.getRandomBoard(0)
   return res.status(200).send({ board: sudoku.board })

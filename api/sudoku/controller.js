@@ -2,14 +2,16 @@ const { Errors } = require('../../constants/Errors')
 const ServerError = require('../../utils/ServerError')
 const service = require('./service')
 
+
 const getSudokuFromImage = async (req, res, next) => {
   try {
-    // console.log(req)
-    await service.getSudokuFromImage(res)
+    const { newFileName } = req.file
+    await service.getSudokuFromImage(newFileName, res)
   } catch (error) {
     next(error)
   }
 }
+
 const getRandomSudoku = async (req, res, next) => {
   try {
     const difficulty = req.query.difficulty || 0
